@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="font-weight-light">Contador: {{ contador }}</h2>
+    <h2 class="font-weight-light">Contador: {{ $store.state.contador }}</h2>
     <button class="btn btn-lg btn-danger mr-1" @click="decrementar">-</button>
     <button class="btn btn-lg btn-success" @click="incrementar">+</button>
   </div>
@@ -8,17 +8,12 @@
 
 <script>
 export default {
-  data() {
-    return {
-      contador: 0
-    }
-  },
   methods: {
     decrementar() {
-      this.contador--
+      this.$store.state.contador--
     },
     incrementar() {
-      this.contador++
+      this.$store.state.contador++
     }
   }
 }
