@@ -10,7 +10,14 @@
 
     <div class="container">
 
-      <Contador />
+      <div class="row">
+        <div class="col-sm-9 border-right">
+          <TarefasLista />
+        </div>
+        <div class="col-sm-3">
+          <Contador />
+        </div>
+      </div>
 
     </div>
 
@@ -20,10 +27,12 @@
 <script>
 
 import Contador from '@/components/Contador'
+import TarefasLista from '@/components/TarefasLista'
 
 export default {
   components: {
-    Contador
+    Contador,
+    TarefasLista
   }
 }
 </script>
