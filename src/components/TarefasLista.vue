@@ -73,6 +73,9 @@ export default {
         'totalDeTarefasConcluidas'
       ])
     },
+    created() {
+      this.$store.commit('listarTarefas')
+    },
     methods: {
         exibirFormularioCriarTarefa(event) {
             if (this.tarefaSelecionada) {
