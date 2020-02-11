@@ -49,7 +49,7 @@
 
 <script>
 
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 
 import TarefaSalvar from './TarefaSalvar.vue'
 import TarefasListaIten from './TarefasListaIten.vue'
@@ -74,7 +74,7 @@ export default {
       ])
     },
     created() {
-      this.$store.commit('listarTarefas', {
+      this.listarTarefas({
         tarefas: [
           { id: 1, titulo: 'Aprender Vue', concluido: true },
           { id: 2, titulo: 'Aprender Vue Router', concluido: true },
@@ -83,21 +83,22 @@ export default {
       })
     },
     methods: {
-        exibirFormularioCriarTarefa(event) {
-            if (this.tarefaSelecionada) {
-                this.tarefaSelecionada = undefined
-                return
-            }
-            this.exibirFormulario = !this.exibirFormulario
-        },
-        selecionarTarefaParaEdicao(tarefa) {
-            this.exibirFormulario = true
-            this.tarefaSelecionada = tarefa
-        },
-        resetar() {
-            this.exibirFormulario = false
-            this.tarefaSelecionada = undefined
-        }
+      ...mapMutations(['listarTarefas']),
+      exibirFormularioCriarTarefa(event) {
+          if (this.tarefaSelecionada) {
+              this.tarefaSelecionada = undefined
+              return
+          }
+          this.exibirFormulario = !this.exibirFormulario
+      },
+      selecionarTarefaParaEdicao(tarefa) {
+          this.exibirFormulario = true
+          this.tarefaSelecionada = tarefa
+      },
+      resetar() {
+          this.exibirFormulario = false
+          this.tarefaSelecionada = undefined
+      }
     }
 }
 </script>
