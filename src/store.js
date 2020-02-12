@@ -3,9 +3,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const contadorModule = {
   state: {
-    contador: 0,
+    contador: 0
+  }
+}
+
+const tarefaModule = {
+  state: {
     tarefas: []
   },
   getters: {
@@ -31,11 +36,20 @@ export default new Vuex.Store({
         }, 2000)
       })
     },
-    listarTarefas: ({ commit, dispatch }, payload) => {
-      return dispatch('buscarTarefas')
-        .then(tarefas => {
-          commit('listarTarefas', { tarefas })
-        })
+    listarTarefas: async ({ commit, dispatch }, payload) => {
+      const tarefas = await dispatch('buscarTarefas')
+      return commit('listarTarefas', { tarefas })
     }
   }
+}
+
+const store =  new Vuex.Store({
+  modules: {
+    contador: contadorModule,
+    tarefas: tarefaModule
+  }
 })
+
+console.log('Store: ', store)
+
+export default store

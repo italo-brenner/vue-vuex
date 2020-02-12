@@ -21,19 +21,20 @@ export default {
   //computed: mapState(['contador']),
   computed: {
     ...mapState({
-      contador: 'contador',
-      contadorAlias: 'contador',
+      contador: state => state.contador.contador,
+      //contador: 'contador',
+      contadorAlias: state => state.contador.contador,
       contadorMultiplicado(state) {
-        return state.contador * this.contadorLocal
+        return state.contador.contador * this.contadorLocal
       }
     })
   },
   methods: {
     decrementar() {
-      this.$store.state.contador--
+      this.$store.state.contador.contador--
     },
     incrementar() {
-      this.$store.state.contador++
+      this.$store.state.contador.contador++
     }
   }
 }
