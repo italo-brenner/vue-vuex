@@ -66,8 +66,8 @@ export default {
         }
     },
     computed: {
-      ...mapState(['tarefas']),
-      ...mapGetters([
+      ...mapState('tarefas', ['tarefas']),
+      ...mapGetters('tarefas', [
         'tarefasAFazer',
         'tarefasConcluidas',
         'totalDeTarefasConcluidas'
@@ -77,7 +77,7 @@ export default {
       this.listarTarefas()
     },
     methods: {
-      ...mapActions(['listarTarefas']),
+      ...mapActions('tarefas', ['listarTarefas']),
       exibirFormularioCriarTarefa(event) {
           if (this.tarefaSelecionada) {
               this.tarefaSelecionada = undefined
