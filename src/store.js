@@ -49,7 +49,9 @@ const tarefaModule = {
     },
     listarTarefas: async ({ commit, dispatch, state, rootState, getters, rootGetters }, payload) => {
       const tarefas = await dispatch('buscarTarefas')
-      return commit('listarTarefas', { tarefas })
+      commit('listarTarefas', { tarefas })
+      commit('logar', 'Plinio Naves', { root: true })
+      dispatch('logar', 'Plinio Naves', { root: true })
     }
   }
 }
@@ -60,6 +62,16 @@ const store =  new Vuex.Store({
   },
   getters: {
     mensagemBoasVindas: state => `Olá ${state.usuario}`
+  },
+  actions: {
+    logar: ({ commit }, usuario) => {
+      commit('logar', usuario)
+    }
+  },
+  mutations: {
+    logar: (state, usuario) => {
+      state.usuario = usuario
+    }
   },
   modules: {
     contador: contadorModule,
