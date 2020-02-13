@@ -26,8 +26,8 @@
 
 <script>
 
-import Contador from '@/components/Contador'
-import TarefasLista from '@/components/TarefasLista'
+import Contador from '@/resources/contador/_components/Contador'
+import TarefasLista from '@/resources/tarefas/_components/TarefasLista'
 
 export default {
   components: {
