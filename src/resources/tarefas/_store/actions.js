@@ -1,23 +1,27 @@
+import TarefasService from './../_services'
+
 import {
-  LISTAR_TAREFAS
+  LISTAR_TAREFAS,
+  CRIAR_TAREFA,
+  EDITAR_TAREFA,
+  DELETAR_TAREFA
 } from './mutation-types'
 
 export default {
-  buscarTarefas: (context, payload) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([
-          { id: 1, titulo: 'Aprender Vue', concluido: true },
-          { id: 2, titulo: 'Aprender Vue Router', concluido: true },
-          { id: 3, titulo: 'Aprender Vuex', concluido: false }
-        ])
-      }, 2000)
-    })
+  criarTarefa: async ({ commit }, { tarefa }) => {
+    const response = await TarefasService.postTarefa(tarefa)
+    commit(CRIAR_TAREFA, { tarefa: response.data })
   },
-  listarTarefas: async ({ commit, dispatch, state, rootState, getters, rootGetters }, payload) => {
-    const tarefas = await dispatch('buscarTarefas')
-    commit(LISTAR_TAREFAS, { tarefas })
-    commit('logar', 'Plinio Naves', { root: true })
-    dispatch('logar', 'Plinio Naves', { root: true })
+  editarTarefa: async ({ commit }, { tarefa }) => {
+    const response = await TarefasService.putTarefa(tarefa)
+    commit(EDITAR_TAREFA, { tarefa: response.data })
+  },
+  deletarTarefa: async ({ commit }, { tarefa }) => {
+    await TarefasService.deleteTarefa(tarefa.id)
+    commit(DELETAR_TAREFA, { tarefa })
+  },
+  listarTarefas: async ({ commit }) => {
+    const response = await TarefasService.getTarefas()
+    commit(LISTAR_TAREFAS, { tarefas: response.data })
   }
 }
