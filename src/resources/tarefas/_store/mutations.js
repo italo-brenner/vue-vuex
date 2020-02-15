@@ -14,7 +14,7 @@ export default {
     state.tarefas.splice(indice, 1, tarefa)
   },
   [DELETAR_TAREFA]: (state, {tarefa}) => {
-    const indice = state.tarefa.findIndex(t => t.id === tarefa.id)
+    const indice = state.tarefas.findIndex(t => t.id === tarefa.id)
     state.tarefas.splice(indice, 1)
   },
   [LISTAR_TAREFAS]: (state, { tarefas }) => {

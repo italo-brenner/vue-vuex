@@ -4,16 +4,6 @@
       "id": 1,
       "titulo": "Aprender Vue",
       "concluido": false
-    },
-    {
-      "id": 2,
-      "titulo": "Aprender Vue Router",
-      "concluido": true
-    },
-    {
-      "id": 3,
-      "titulo": "Aprender Vuex",
-      "concluido": true
     }
   ]
 }
