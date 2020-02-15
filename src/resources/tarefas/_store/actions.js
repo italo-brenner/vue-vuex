@@ -5,7 +5,8 @@ import {
   CRIAR_TAREFA,
   EDITAR_TAREFA,
   DELETAR_TAREFA,
-  SELECIONAR_TAREFA
+  SELECIONAR_TAREFA,
+  SETAR_ERRO
 } from './mutation-types'
 
 export default {
@@ -15,20 +16,36 @@ export default {
     dispatch('editarTarefa', { tarefa })
   },
   criarTarefa: async ({ commit }, { tarefa }) => {
-    const response = await TarefasService.postTarefa(tarefa)
-    commit(CRIAR_TAREFA, { tarefa: response.data })
+    try {
+      const response = await TarefasService.postTarefa(tarefa)
+      commit(CRIAR_TAREFA, { tarefa: response.data })
+    } catch(erro) {
+      commit(SETAR_ERRO, { erro })
+    }
   },
   editarTarefa: async ({ commit }, { tarefa }) => {
-    const response = await TarefasService.putTarefa(tarefa)
-    commit(EDITAR_TAREFA, { tarefa: response.data })
+    try {
+      const response = await TarefasService.putTarefa(tarefa)
+      commit(EDITAR_TAREFA, { tarefa: response.data })
+    } catch(erro) {
+      commit(SETAR_ERRO, { erro })
+    }
   },
   deletarTarefa: async ({ commit }, { tarefa }) => {
-    await TarefasService.deleteTarefa(tarefa.id)
-    commit(DELETAR_TAREFA, { tarefa })
+    try {
+      await TarefasService.deleteTarefa(tarefa.id)
+      commit(DELETAR_TAREFA, { tarefa })
+    } catch(erro) {
+      commit(SETAR_ERRO, { erro })
+    }
   },
   listarTarefas: async ({ commit }) => {
-    const response = await TarefasService.getTarefas()
-    commit(LISTAR_TAREFAS, { tarefas: response.data })
+    try {
+      const response = await TarefasService.getTarefas()
+      commit(LISTAR_TAREFAS, { tarefas: response.data })
+    } catch(erro) {
+      commit(SETAR_ERRO, { erro })
+    }
   },
   selecionarTarefa: ({ commit }, payload) => {
     commit(SELECIONAR_TAREFA, payload)
