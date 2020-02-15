@@ -2,8 +2,18 @@
   "tarefas": [
     {
       "id": 1,
+      "titulo": "Aprender Vuex",
+      "concluido": true
+    },
+    {
+      "id": 2,
+      "titulo": "Aprender Vue Router",
+      "concluido": true
+    },
+    {
       "titulo": "Aprender Vue",
-      "concluido": false
+      "concluido": false,
+      "id": 3
     }
   ]
 }

@@ -11,16 +11,17 @@
                             type="text"
                             class="form-control" 
                             placeholder="Título da tarefa"
-                            :value="tarefa && tarefa.titulo">
+                            v-model="tarefa.titulo">
                     </div>
                 </div>
-                <div class="col-sm-2" v-if="tarefa">
+                <div class="col-sm-2" v-if="tarefaSelecionada">
                     <div class="form-group">
                         <label>Tarefa concluída?</label>
                         <button 
                             type="button"
                             class="btn btn-sm d-block" 
-                            :class="classeBotao">
+                            :class="classeBotao"
+                            @click="tarefa.concluido = ! tarefa.concluido">
                                 <i class="fa fa-check"></i>
                         </button>
                     </div>
@@ -34,35 +35,48 @@
 
 <script>
 
+import { mapState } from 'vuex'
+
 export default {
-    props: {
-        tarefa: {
-            type: Object,
-            default: undefined
-        }
-    },
-    computed: {
-        classeColuna() {
-            return this.tarefa 
-                ? 'col-sm-10'
-                : 'col-sm-12'
-        },
-        classeBotao() {
-            return this.tarefa && this.tarefa.concluido
-                ? 'btn-success'
-                : 'btn-secondary'
-        }
-    },
-    created() {
-        if (this.tarefa) {
-            console.log('Tarefa por id: ', this.$store.getters['tarefas/buscarTarefaPorId'](this.tarefa.id))
-        }
-    },
-    methods: {
-        salvar(event) {
-            const operacao = !this.tarefa ? 'criar' : 'editar'
-            console.log('Operação: ', operacao)
-        }
+  data() {
+    return {
+      tarefa: {}
     }
+  },
+  computed: {
+    ...mapState('tarefas',[
+      'tarefaSelecionada'
+    ]),
+    classeColuna() {
+      return this.tarefaSelecionada 
+        ? 'col-sm-10'
+        : 'col-sm-12'
+    },
+    classeBotao() {
+      return this.tarefaSelecionada && this.tarefa.concluido
+        ? 'btn-success'
+        : 'btn-secondary'
+    }
+  },
+  watch: {
+    tarefaSelecionada(tarefaNova, tarefaAntiga) {
+      this.sincronizar(tarefaNova)
+    }
+  },
+  created() {
+    this.sincronizar(this.tarefaSelecionada)
+  },
+  methods: {
+    salvar(event) {
+      const operacao = !this.tarefaSelecionada ? 'criar' : 'editar'
+      this.$emit('salvar', { operacao, tarefa: this.tarefa })
+    },
+    sincronizar(novaTarefa) {
+      this.tarefa = Object.assign(
+        {},
+        novaTarefa || { titulo: '', concluido: false }
+      )
+    }
+  }
 }
 </script>
