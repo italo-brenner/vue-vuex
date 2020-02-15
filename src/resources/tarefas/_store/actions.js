@@ -4,7 +4,8 @@ import {
   LISTAR_TAREFAS,
   CRIAR_TAREFA,
   EDITAR_TAREFA,
-  DELETAR_TAREFA
+  DELETAR_TAREFA,
+  SELECIONAR_TAREFA
 } from './mutation-types'
 
 export default {
@@ -28,5 +29,11 @@ export default {
   listarTarefas: async ({ commit }) => {
     const response = await TarefasService.getTarefas()
     commit(LISTAR_TAREFAS, { tarefas: response.data })
+  },
+  selecionarTarefa: ({ commit }, payload) => {
+    commit(SELECIONAR_TAREFA, payload)
+  },
+  resetarTarefaSelecionada: ({ commit }) => {
+    commit(SELECIONAR_TAREFA, { tarefa: undefined })
   }
 }

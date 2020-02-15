@@ -68,12 +68,11 @@ export default {
     },
     data() {
         return {
-            exibirFormulario: false,
-            tarefaSelecionada: undefined
+            exibirFormulario: false
         }
     },
     computed: {
-      ...mapState(['tarefas']),
+      ...mapState(['tarefaSelecionada']),
       ...mapGetters([
         'tarefasAFazer',
         'tarefasConcluidas',
@@ -90,7 +89,9 @@ export default {
       ...mapActions([
         'concluirTarefa',
         'deletarTarefa',
-        'listarTarefas'
+        'listarTarefas',
+        'selecionarTarefa',
+        'resetarTarefaSelecionada'
       ]),
       confirmarRemocaoTarefa(tarefa) {
         const confirmar = window.confirm(`Deseja deletar a tarefa "${tarefa.titulo}"?`)
@@ -100,18 +101,18 @@ export default {
       },
       exibirFormularioCriarTarefa(event) {
         if (this.tarefaSelecionada) {
-            this.tarefaSelecionada = undefined
+            this.resetarTarefaSelecionada()
             return
         }
-        this.exibirFormulario = !this.exibirFormulario
+        this.exibirFormulario = ! this.exibirFormulario
       },
       selecionarTarefaParaEdicao(tarefa) {
           this.exibirFormulario = true
-          this.tarefaSelecionada = tarefa
+          this.selecionarTarefa({ tarefa })
       },
       resetar() {
           this.exibirFormulario = false
-          this.tarefaSelecionada = undefined
+          this.resetarTarefaSelecionada()
       }
     }
 }
