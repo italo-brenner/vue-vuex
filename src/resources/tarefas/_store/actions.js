@@ -1,4 +1,4 @@
-import TarefasService from './../_services'
+import TarefasService from './../_services/TarefasService'
 
 import {
   LISTAR_TAREFAS,
@@ -8,6 +8,11 @@ import {
 } from './mutation-types'
 
 export default {
+  concluirTarefa: async ({ dispatch }, payload) => {
+    const tarefa = Object.assign({}, payload.tarefa)
+    tarefa.concluido = ! tarefa.concluido
+    dispatch('editarTarefa', { tarefa })
+  },
   criarTarefa: async ({ commit }, { tarefa }) => {
     const response = await TarefasService.postTarefa(tarefa)
     commit(CRIAR_TAREFA, { tarefa: response.data })
